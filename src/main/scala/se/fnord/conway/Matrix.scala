@@ -1,3 +1,5 @@
+package se.fnord.conway
+
 import scala.reflect.ClassTag
 
 trait Cursor[T] {
@@ -14,7 +16,7 @@ class Matrix[T: ClassTag](cells: Array[Array[T]], default: T) {
 
   val columns = cells(0).length
   require(columns > 0)
-  require(cells.filter(_.length != columns).isEmpty)
+  require(!cells.exists(_.length != columns))
 
   def this(columns: Int, rows: Int, default: T) = {
     this(Matrix.makeArray[T](columns, rows, default), default)
@@ -28,10 +30,10 @@ class Matrix[T: ClassTag](cells: Array[Array[T]], default: T) {
 
   def map[U: ClassTag](fn: Cursor[T] => U, default: U): Matrix[U] = {
     val newCells = Array.ofDim[U](rows, columns)
-    for {y <- 0 until cells.length
+    for {y <- cells.indices
          row = cells(y)
          newRow = newCells(y)
-         x <- 0 until row.length
+         x <- row.indices
     } {
       newRow(x) = fn(cursor(x, y))
     }
@@ -49,23 +51,11 @@ object Matrix {
       Array.fill[T](columns)(initial)
     }
 
-  def zip[A, B](a: Matrix[A], b: Matrix[B]): Matrix[(A, B)] = {
-    val newCells = Array.ofDim[(A, B)](a.rows, a.columns)
-    for {y <- 0 until a.rows
-      newRow = newCells(y)
-      x <- 0 until a.columns
-    } {
-        newRow(x) = (a.get(x, y), b.get(x, y))
-    }
-
-    new Matrix[(A, B)](newCells, (a.defaultValue, b.defaultValue))
-  }
-
   def combine[A, B, C: ClassTag](a: Matrix[A], b: Matrix[B], fn: Cursor[(A, B)] => C, default: C): Matrix[C] = {
     val newCells = Array.ofDim[C](a.rows, a.columns)
-    for {y <- 0 until a.rows
+    for {y <- newCells.indices
          newRow = newCells(y)
-         x <- 0 until a.columns
+         x <- newRow.indices
     } {
       newRow(x) = fn(new ZipCursorImp[A, B](a, b, x, y))
     }

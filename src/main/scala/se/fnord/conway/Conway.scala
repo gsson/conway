@@ -1,3 +1,4 @@
+package se.fnord.conway
 
 trait Cell {
   def nextState(liveNeighbors : Int) : Cell;

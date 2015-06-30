@@ -1,12 +1,13 @@
+package se.fnord.conway
 
 object Main {
   def run(board : Engine.Board): Unit = {
-    var c = board;
+    var c = board
     while (true) {
       println(c)
       println()
       Thread.sleep(1000)
-      c = Engine.evolve(c);
+      c = Engine.evolve(c)
     }
   }
 
