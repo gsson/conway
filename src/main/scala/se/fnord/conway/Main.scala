@@ -13,7 +13,7 @@ object Main {
 
 
   def main(args: Array[String]) {
-    val cells = new Engine.Board(Array(
+    val cells = Matrix(Array[Seq[Cell]](
       Array(DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell),
       Array(DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell),
       Array(DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell, DeadCell),
