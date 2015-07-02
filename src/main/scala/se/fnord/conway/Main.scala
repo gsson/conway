@@ -1,7 +1,7 @@
 package se.fnord.conway
 
 object Main {
-  def run(board : Engine.Board): Unit = {
+  def run(board : Engine.Board) = {
     var c = board
     while (true) {
       println(c)
@@ -28,4 +28,3 @@ object Main {
     run(cells)
   }
 }
-
