@@ -102,6 +102,8 @@ private class MatrixImpl[T : ClassTag](cells: Seq[Seq[T]], default: T) extends M
 
 private object MatrixImpl {
   private def makeArray[T: ClassTag](columns: Int, rows: Int, initial: T): Seq[Seq[T]] =
-    Array.fill(rows, columns)(initial).asInstanceOf
+    Array.fill[Seq[T]](rows) {
+      Array.fill(columns)(initial)
+    }
 }
 
