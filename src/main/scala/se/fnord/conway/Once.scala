@@ -3,7 +3,7 @@ package se.fnord.conway
 import java.util.concurrent.atomic.AtomicBoolean
 
 class Once {
-  val done : AtomicBoolean = new AtomicBoolean(false)
+  val done = new AtomicBoolean(false)
   def apply(f : => Unit) {
     if (done.compareAndSet(false, true))
       f
